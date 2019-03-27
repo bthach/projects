@@ -68,12 +68,3 @@ app.get('/callback', function(req, res) {
 })
 
 app.listen('8888', () => console.log('Listening on port 8888'));
-
-/*
-
-https://accounts.spotify.com/authorizeclient_id=4a259572e73845cd8f2dc1eb865fb0ab&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8888%2Fcallback
-
-
-http://localhost:8888/callback?code=AQAnZSAlFS-B4TdoIegY0-YRcZ86VPxLpmL0yAVuJW0ogdt4PmiCmeHb57-mNapTQZAAX8Z3MCiJZh1Tx9F65g_Q7mA5bbcb0FpeHMgUpPa0gMNh961tc-3_6DQFiFP7LURNAVyjqxANTWqlhBOljKtXz0A2RQx_-78rDIEqhT37SIqy8vXiGGeOCwvf5EWp63GXPORV#_=_
-
-*/
