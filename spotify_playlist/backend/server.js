@@ -4,12 +4,21 @@ const qs = require('qs');
 const config = require('./config.json');
 
 const client_id = config.client_id;
-console.log(config.client_id);
 const redirect_uri = config.redirect_uri;
 const client_secret = config.client_secret;
 
 const app = express();
 const axios = require('axios');
+
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
+
+app.use(allowCrossDomain);
+
 
 app.get('/login', function(req, res) {
 
@@ -30,8 +39,6 @@ app.get('/callback', function(req, res) {
     const str = client_id + ':' + client_secret;
     const buf1 = Buffer.from(str);
     const Authorization = 'Basic ' + buf1.toString('base64');
-    
-    // let Authorization = 'Basic ' + str;
 
     let url = 'https://accounts.spotify.com/api/token'
 
@@ -58,11 +65,13 @@ app.get('/callback', function(req, res) {
                 Authorization: resp.data.token_type + ' ' + resp.data.access_token
             }
         }).then(resp => {
-            console.log(resp);
-        }).catch(err => { console.log(err)})
+            if (resp.data) {
+                console.log(resp.data);
+                return resp.data;
+            }
+        }).catch(err => { console.log(err.statusCode + ' ' + err.statusMessage)})
     }).catch(err => {
-
-        console.log("test");
+        console.log(err);
     })
     
 })
